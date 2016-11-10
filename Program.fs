@@ -91,7 +91,8 @@ let countSecretCode (input:string) : int =
     input.ToCharArray() |> Array.filter(fun c -> c = '.') |> Array.length
 
 let rec bitsFromConsole (bits: int array) = 
-    printfn "What do you think of this red card holder?"
+    printfn "Please tell me about this person?"
+    printf "> "
     let input = Console.ReadLine()
     let count = countSecretCode(input)
     if count > 0 then
@@ -102,25 +103,29 @@ let rec bitsFromConsole (bits: int array) =
 
 [<EntryPoint>]
 let main argv = 
-    printfn "I am a magic genie stuck in the computer."
-    printfn "Please tell me something about the audience!"
-    printfn "I will read their characters and minds!"
 
-    System.Threading.Thread.Sleep(2000);
+    Console.Clear()
+
+    printfn "I AM FOODINNI!! \n"
+
+    printfn "I will read the audience member's minds. \n"
+
+    System.Threading.Thread.Sleep(5000);
 
     printfn "These humans are too compicated."
-    printfn "I need more information."
+    printfn "Ask the first red card holder to speak. \n"
 
-    printfn "Ask the first red card holders to stand..."
     let bits = bitsFromConsole [|0;0;0;0;0|] 
 
-    printfn "Okay... I can do this... please wait while I assess their minds."
+    printfn "Okay... I can do this... please wait while I read their minds."
 
     System.Threading.Thread.Sleep(2000);
 
-    printfn "Got it. The cards are... wait for it..."
+    printfn "Got it. The cards are... wait for it... \n"
 
     System.Threading.Thread.Sleep(2000);
+
+    printfn "Alakazam! \n"
 
     bits 
         |> Array.toList 
@@ -129,5 +134,5 @@ let main argv =
         |> List.map(printCard)
         |> List.iter(printfn "%s")
 
-    printfn "Magic exists"
+    printfn "\nMagic exists!"
     0 // return an integer exit code
