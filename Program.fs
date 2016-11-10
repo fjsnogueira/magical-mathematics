@@ -53,7 +53,6 @@ let sequence =
     Card (Rank 8, Spades)
     Card (Rank 8, Diamonds)
  ]
-
 let stringToSuit (input:string) = 
     match input.ToLower() with 
     | "spades" -> Spades
@@ -62,45 +61,21 @@ let stringToSuit (input:string) =
     | "hearts" -> Hearts
     | _ -> failwith "That is not a suit dude."
 
-let suitToBinary card = 
-    match card with 
+let suitToBinary suit = 
+    match suit with 
     | Spades
     | Clubs -> 0
     | Diamonds
     | Hearts -> 1
-let printDeck = 
-    [
-        for s in [Clubs; Hearts; Spades; Diamonds] do 
-            for v in [Ace; King; Queen; Jack] do 
-                yield Card (v, s)
-            for r in [2..10] do 
-                yield Card (Rank r, s)
-    ]
-let findWindow (bits) =
-  [
-      
-  ]
+let cardToBinary card =
+    match card with 
+    | Card(_, suit) -> suitToBinary suit
+let getWindowAsBinary (length) =
+  sequence |> List.map(cardToBinary) |> List.windowed(length)
 
 [<EntryPoint>]
 let main argv = 
-    // printfn "Tell me a suit and I will tell you the binary representation"
-    // let s = Console.ReadLine(); // Clubs
-    // let binarySuit = stringToSuit >> suitToBinary
-    // printfn "%A" (binarySuit s) // 0
-
-    printfn "Tell me five binary digits and I will tell you whether there is a matching window" // 00000
-    printfn "%A" // true
-
-    // printfn "Tell me something about the people who chose the cards:"
-    // let window = Console.ReadLine();
-    // 11111     
-    // printfn "%s" window
-    // printfn "The cards that they card are these:"
-    // Jack of Hearts
-    // Two of Clubs
-    // Three of Diamonds
-    // Seven of Spades
-    // Nine of Hearts
+    printfn "%A" (getWindowAsBinary 5)
 
     printfn "Magic exists"
     0 // return an integer exit code
