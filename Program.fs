@@ -8,7 +8,7 @@ type Value =
     | Queen
     | Jack
     | Rank of int
-    
+
 type Suit =
     | Clubs
     | Hearts
@@ -51,6 +51,7 @@ let sequence =
     Card (Rank 8, Spades)
     Card (Rank 8, Diamonds)
  ]
+
 let stringToSuit (input:string) = 
     match input.ToLower() with 
     | "spades" -> Spades
@@ -58,19 +59,24 @@ let stringToSuit (input:string) =
     | "diamonds" -> Diamonds
     | "hearts" -> Hearts
     | _ -> failwith "That is not a suit dude."
+
 let suitToBinary suit = 
     match suit with 
     | Spades
     | Clubs -> 0
     | Diamonds
     | Hearts -> 1
+
 let cardToBinary card =
     match card with 
     | Card(_, suit) -> suitToBinary suit
+
 let getWindowAsBinary =
   sequence |> List.map(cardToBinary) |> List.windowed(5) 
+
 let convertBitsToString (bits:int list) =
     bits |> List.map(string) |> List.reduce((+))
+
 let findChosenCards (bitInput:string) = // 00000
     sequence
     |> List.map(fun card -> (cardToBinary card, card))
@@ -81,12 +87,12 @@ let findChosenCards (bitInput:string) = // 00000
         then Some(window |> List.map(snd))
         else None)
     |> List.head
+
 let printCard card =
     match card with 
         | Card(Rank rank, suit) -> sprintf "%d of %A" rank suit
         | Card(name, suit) -> sprintf "%A of %A" name suit
 
-// the number of periods minus one is the index of the person
 let countSecretCode (input:string) : int = 
     input.ToCharArray() |> Array.filter(fun c -> c = '.') |> Array.length
 
