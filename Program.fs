@@ -106,7 +106,7 @@ let main argv =
     printfn "Please tell me something about the audience!"
     printfn "I will read their characters and minds!"
 
-    // System.Threading.Thread.Sleep(2000);
+    System.Threading.Thread.Sleep(2000);
 
     printfn "These humans are too compicated."
     printfn "I need more information."
@@ -116,13 +116,11 @@ let main argv =
 
     printfn "Okay... I can do this... please wait while I assess their minds."
 
-    // System.Threading.Thread.Sleep(2000);
+    System.Threading.Thread.Sleep(2000);
 
     printfn "Got it. The cards are... wait for it..."
 
-    // System.Threading.Thread.Sleep(2000);
-
-    printfn "%A" (bits |> Array.toList |> convertBitsToString)
+    System.Threading.Thread.Sleep(2000);
 
     bits 
         |> Array.toList 
