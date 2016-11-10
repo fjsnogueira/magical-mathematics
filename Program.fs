@@ -22,7 +22,9 @@ let PrintDeck =
     [
         for s in [Clubs; Hearts; Spades; Diamonds] do 
             for v in [Ace; King; Queen; Jack] do 
-                yield (v, s)
+                yield Card (v, s)
+            for r in [2..10] do 
+                yield Card (Rank r, s)
     ]
 
 [<EntryPoint>]
