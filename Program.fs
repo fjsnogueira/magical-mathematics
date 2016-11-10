@@ -2,7 +2,6 @@
 
 open System
 
-// discriminating union
 type Value = 
     | Ace
     | King
@@ -10,7 +9,6 @@ type Value =
     | Jack
     | Rank of int
     
-// discriminating union
 type Suit =
     | Clubs
     | Hearts
@@ -60,7 +58,6 @@ let stringToSuit (input:string) =
     | "diamonds" -> Diamonds
     | "hearts" -> Hearts
     | _ -> failwith "That is not a suit dude."
-
 let suitToBinary suit = 
     match suit with 
     | Spades
@@ -70,12 +67,25 @@ let suitToBinary suit =
 let cardToBinary card =
     match card with 
     | Card(_, suit) -> suitToBinary suit
-let getWindowAsBinary (length) =
-  sequence |> List.map(cardToBinary) |> List.windowed(length)
+let getWindowAsBinary =
+  sequence |> List.map(cardToBinary) |> List.windowed(5) 
+let convertBitsToString (bits:int list) =
+    bits |> List.map(string) |> List.reduce((+))
+let findChosenCards (bitInput:string) = // 00000
+    sequence
+    |> List.map(fun card -> (cardToBinary card, card))
+    |> List.windowed(5)
+    |> List.choose(fun window -> // window is going to be the first window of length 5
+        let bitWindow = (window |> List.map(fst)) |> convertBitsToString
+        if bitWindow = bitInput
+        then Some(window |> List.map(snd))
+        else None)
+    |> List.head
 
 [<EntryPoint>]
 let main argv = 
-    printfn "%A" (getWindowAsBinary 5)
-
+    printfn "Tell me something about the audience:"
+    let bitStringInput = Console.ReadLine()
+    printfn "%A" (bitStringInput |> findChosenCards)
     printfn "Magic exists"
     0 // return an integer exit code
