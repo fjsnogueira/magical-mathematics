@@ -81,24 +81,55 @@ let findChosenCards (bitInput:string) = // 00000
         then Some(window |> List.map(snd))
         else None)
     |> List.head
-
 let printCard card =
     match card with 
         | Card(Rank rank, suit) -> sprintf "%d of %A" rank suit
         | Card(name, suit) -> sprintf "%A of %A" name suit
+
+// the number of periods minus one is the index of the person
+let countSecretCode (input:string) : int = 
+    input.ToCharArray() |> Array.filter(fun c -> c = '.') |> Array.length
+
+let rec bitsFromConsole (bits: int array) = 
+    printfn "What do you think of this red card holder?"
+    let input = Console.ReadLine()
+    let count = countSecretCode(input)
+    if count > 0 then
+        bits.[count - 1] <- 1
+        bitsFromConsole bits
+    else 
+        bits
 
 [<EntryPoint>]
 let main argv = 
     printfn "I am a magic genie stuck in the computer."
     printfn "Please tell me something about the audience!"
     printfn "I will read their characters and minds!"
-    printfn "Tell me now:"
 
-    let bitStringInput = Console.ReadLine()
-    bitStringInput 
-      |> findChosenCards 
-      |> List.map(printCard)
-      |> List.iter(printfn "%s")
+    // System.Threading.Thread.Sleep(2000);
+
+    printfn "These humans are too compicated."
+    printfn "I need more information."
+
+    printfn "Ask the first red card holders to stand..."
+    let bits = bitsFromConsole [|0;0;0;0;0|] 
+
+    printfn "Okay... I can do this... please wait while I assess their minds."
+
+    // System.Threading.Thread.Sleep(2000);
+
+    printfn "Got it. The cards are... wait for it..."
+
+    // System.Threading.Thread.Sleep(2000);
+
+    printfn "%A" (bits |> Array.toList |> convertBitsToString)
+
+    bits 
+        |> Array.toList 
+        |> convertBitsToString 
+        |> findChosenCards 
+        |> List.map(printCard)
+        |> List.iter(printfn "%s")
 
     printfn "Magic exists"
     0 // return an integer exit code
