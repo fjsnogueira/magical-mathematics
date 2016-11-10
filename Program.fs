@@ -82,10 +82,23 @@ let findChosenCards (bitInput:string) = // 00000
         else None)
     |> List.head
 
+let printCard card =
+    match card with 
+        | Card(Rank rank, suit) -> sprintf "%d of %A" rank suit
+        | Card(name, suit) -> sprintf "%A of %A" name suit
+
 [<EntryPoint>]
 let main argv = 
-    printfn "Tell me something about the audience:"
+    printfn "I am a magic genie stuck in the computer."
+    printfn "Please tell me something about the audience!"
+    printfn "I will read their characters and minds!"
+    printfn "Tell me now:"
+
     let bitStringInput = Console.ReadLine()
-    printfn "%A" (bitStringInput |> findChosenCards)
+    bitStringInput 
+      |> findChosenCards 
+      |> List.map(printCard)
+      |> List.iter(printfn "%s")
+
     printfn "Magic exists"
     0 // return an integer exit code
